@@ -1,0 +1,83 @@
+@charset "utf-8";
+/* Search */
+.search-filters-common {}
+.search-filters-searchable {margin-top: 1rem;}
+.search-filter:not(:first-of-type) {margin-top: 1rem;}
+#btn-search-filters {display: none;}
+.search-results .subtitle:not(:first-of-type) {margin-top: 2rem;}
+.search-result {
+  border-top: 3px solid var(--color-gray-100, whitesmoke);
+}
+.search-result a {
+  padding: 1rem 0;
+  color: var(--color-text, #0d0e0e);
+}
+.search-result a:hover {
+  background: var(--color-gray-100, whitesmoke);
+}
+
+/* Search Bar */
+.searchbar {position: relative;}
+.searchbar-dropdown {
+  position: absolute;
+  display: flex;
+  visibility: hidden;
+  flex-direction: column;
+  z-index: 1;
+  border: 1px solid var(--color-gray-300, whitesmoke);
+  width: 100%;
+  min-width: 500px;
+  max-height: 80vh;
+  overflow: hidden;
+  -ms-overflow-y: visible;
+  pointer-events: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  /*box-shadow: 0 1px 3px rgba(0,0,0,0.12),0 1px 1px 1px rgba(0,0,0,0.16);*/
+}
+.searchbar-dropdown.active {
+  visibility: visible;
+}
+.searchbar-head,
+.searchbar-foot {
+  align-items: center;
+  background-color: var(--color-gray-100, whitesmoke);
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-start;
+  padding: 0.5rem;
+  position: relative;
+}
+.searchbar-body {
+  -webkit-overflow-scrolling: touch;
+  background-color: var(--color-white, white);
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+}
+.searchbar-icon {visibility: hidden;}
+.searchbar-result:not(:first-of-type) {
+  border-top: 1px solid var(--color-gray-100, whitesmoke);
+}
+.searchbar-result a {
+  padding: .5rem;
+  color: var(--color-text, #0d0e0e);
+}
+.searchbar-result a:hover {
+  background: var(--color-gray-100, whitesmoke);
+}
+.searchbar-result-type {
+  display: inline-block;
+  border: 1px solid var(--color-gray-300);
+  background: var(--color-gray-100);
+  padding: .1rem .2rem;
+}
+/* tablet */
+@media screen and (max-width: 1023px), print {
+  .searchbar {padding: .5rem 0;}
+}
+/* mobile */
+@media screen and (max-width: 768px), print {
+  #btn-search-filters {display: inline-block;}
+  .searchbar-icon {visibility: visible;}
+  .searchbar {display: none;}
+}
