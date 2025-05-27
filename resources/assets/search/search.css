@@ -23,7 +23,7 @@
   display: flex;
   visibility: hidden;
   flex-direction: column;
-  z-index: 1;
+  z-index: 41;
   border: 1px solid var(--color-gray-300, whitesmoke);
   width: 100%;
   min-width: 500px;
@@ -31,8 +31,7 @@
   overflow: hidden;
   -ms-overflow-y: visible;
   pointer-events: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  /*box-shadow: 0 1px 3px rgba(0,0,0,0.12),0 1px 1px 1px rgba(0,0,0,0.16);*/
+  box-shadow: 0px 1px 6px 0px var(--color-shadow);
 }
 .searchbar-dropdown.active {
   visibility: visible;
