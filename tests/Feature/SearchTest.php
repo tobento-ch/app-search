@@ -16,6 +16,9 @@ namespace Tobento\App\Search\Test\Feature;
 use Tobento\App\AppInterface;
 use Tobento\App\Testing\Http\AssertableJson;
 use Tobento\Service\Menu\MenusInterface;
+use Tobento\Service\Language\LanguageFactory;
+use Tobento\Service\Language\LanguagesInterface;
+use Tobento\Service\Language\Languages;
 use Tobento\Service\Responser\ResponserInterface;
 use Tobento\Service\Routing\RouterInterface;
 use Tobento\Service\View\ViewInterface;
@@ -137,6 +140,25 @@ class SearchTest extends \Tobento\App\Testing\TestCase
         $response = $http->response()
             ->assertStatus(200)
             ->assertBodyContains('<form action="http://localhost/search" method="GET" data-searchbar="modal" class="min-width-full">')
-            ->assertBodyContains('<input class="small" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Search" name="search[term]" type="search">');
+            ->assertBodyContains('<input class="small" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Search" placeholder="Search" name="search[term]" type="search">');
+    }
+    
+    public function testSearchScreenIsRenderedInLocaleDe()
+    {
+        $http = $this->fakeHttp();
+        $http->request(method: 'GET', uri: 'de/suche');
+        
+        $app = $this->getApp();
+        $app->on(LanguagesInterface::class, function() {
+            $languageFactory = new LanguageFactory();
+            return new Languages(
+                $languageFactory->createLanguage(locale: 'en', default: true),
+                $languageFactory->createLanguage(locale: 'de', slug: 'de'),
+            );
+        });
+        
+        $http->response()
+            ->assertStatus(200)
+            ->assertBodyContains('Suche');
     }
 }
