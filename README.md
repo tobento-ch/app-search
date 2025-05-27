@@ -155,6 +155,9 @@ In the [config file](#search-config) you can configure this feature:
         viewSearchbar: 'search/searchbar',
         viewSearchbarResults: 'search/searchbar-results',
         
+        // You may customize the searchbar input placeholder:
+        searchbarInputPlaceholder: 'Search...',
+        
         // If true, routes are being localized.
         localizeRoute: false,
     ),
