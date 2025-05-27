@@ -34,12 +34,14 @@ class Search
      * @param string $view
      * @param string $viewSearchbar
      * @param string $viewSearchbarResults
+     * @param string $searchbarInputPlaceholder
      * @param bool $localizeRoute
      */
     public function __construct(
         protected string $view = 'search/index',
         protected string $viewSearchbar = 'search/searchbar',
         protected string $viewSearchbarResults = 'search/searchbar-results',
+        protected string $searchbarInputPlaceholder = 'Search',
         protected bool $localizeRoute = false,
     ) {}
     
@@ -70,10 +72,12 @@ class Search
             ViewInterface::class,
             function(ViewInterface $view) {
                 $viewName = $this->viewSearchbar;
+                $placeholder = $this->searchbarInputPlaceholder;
                 $view->on(
                     'search.bar', 
-                    static function(array $data, ViewInterface $view, string $key) use ($viewName): array {
+                    static function(array $data, ViewInterface $view, string $key) use ($viewName, $placeholder): array {
                         $view->add(key: $key, view: $viewName);
+                        $data['inputPlaceholder'] = $placeholder;
                         return $data;
                     }
                 );
@@ -84,14 +88,14 @@ class Search
     /**
      * Handle the search.
      *
-     * @param SearchInterface $search
+     * @param SearchInterface $searchService
      * @param InputInterface $input
      * @param RequesterInterface $requester
      * @param ResponserInterface $responser
      * @return ResponseInterface
      */
     public function show(
-        SearchInterface $search,
+        SearchInterface $searchService,
         InputInterface $input,
         RequesterInterface $requester,
         ResponserInterface $responser,
@@ -100,9 +104,9 @@ class Search
             $response = $responser->render(
                 view: $this->viewSearchbarResults,
                 data: [
-                    'searchResults' => $search->search($input),
-                    'searchFilters' => $search->filters(),
-                    'searchables' => $search->searchables(),
+                    'searchResults' => $searchService->search($input),
+                    'searchFilters' => $searchService->filters(),
+                    'searchables' => $searchService->searchables(),
                 ],
             );
             
@@ -115,9 +119,9 @@ class Search
         return $responser->render(
             view: $this->view,
             data: [
-                'searchResults' => $search->search($input),
-                'searchFilters' => $search->filters(),
-                'searchables' => $search->searchables(),
+                'searchResults' => $searchService->search($input),
+                'searchFilters' => $searchService->filters(),
+                'searchables' => $searchService->searchables(),
             ],
         );
     }
