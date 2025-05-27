@@ -35,7 +35,7 @@ return [
     */
     
     'features' => [
-        Feature\Search::class,
+        new Feature\Search(localizeRoute: true),
     ],
     
     /*
