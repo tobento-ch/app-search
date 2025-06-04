@@ -44,6 +44,12 @@ class Search implements SearchInterface
      */
     public function filters(): FiltersInterface
     {
+        foreach($this->searchables() as $searchable) {
+            foreach($searchable->filters() as $filter) {
+                $this->filters->add($filter);
+            }
+        }
+        
         return $this->filters;
     }
 
