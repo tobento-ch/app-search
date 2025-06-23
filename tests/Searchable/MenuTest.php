@@ -22,6 +22,7 @@ use Tobento\App\Search\Searchable;
 use Tobento\App\Search\SearchableInterface;
 use Tobento\App\Search\Searchables;
 use Tobento\App\Search\Test\Factory;
+use Tobento\Service\Menu\Menu;
 
 class MenuTest extends TestCase
 {
@@ -76,6 +77,25 @@ class MenuTest extends TestCase
         $this->assertSame('Menu Items', $results[0]->type());
         $this->assertSame('foo', $results[0]->title());
         $this->assertSame('foo', $results[0]->url());
+    }
+    
+    public function testSearchMethodReturnsCreatedItemsWithTree()
+    {
+        $menu = new Menu('name');
+        $menu->link('foo', 'Foo')->id('foo');
+        $menu->link('bar', 'Bar')->id('bar')->parent('foo');
+        $menu->link('baz', 'Baz')->id('baz')->parent('bar');
+        
+        $searchable = new Searchable\Menu(menu: $menu);
+        
+        $results = $searchable->search(
+            filters: new Filters(),
+        );
+        
+        $this->assertSame('menu', $results[2]->searchable());
+        $this->assertSame('Menu Items', $results[2]->type());
+        $this->assertSame('Foo / Bar / Baz', $results[2]->title());
+        $this->assertSame('baz', $results[2]->url());
     }
     
     public function testSearchMethodReturnsAllWithoutActiveFilters()
