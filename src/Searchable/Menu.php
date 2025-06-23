@@ -31,6 +31,11 @@ class Menu implements SearchableInterface
     /**
      * @var MenuInterface
      */
+    protected MenuInterface $menuOrg;
+    
+    /**
+     * @var MenuInterface
+     */
     protected MenuInterface $menu;
     
     /**
@@ -52,9 +57,10 @@ class Menu implements SearchableInterface
         protected string $title = 'Menu Items',
         protected int $priority = 0,
     ) {
+        $this->menuOrg = $menu;
         $this->menu = clone $menu;
         
-        $this->menu->filter(function(ItemInterface $item): bool {
+        $this->menu->filter(static function(ItemInterface $item): bool {
             return $item instanceof Link;
         });
         
@@ -126,7 +132,7 @@ class Menu implements SearchableInterface
                         break;
                     }
                     
-                    $this->menu->filter(function(ItemInterface $item) use ($filter): bool {
+                    $this->menu->filter(static function(ItemInterface $item) use ($filter): bool {
                         foreach(explode(' ', $filter->searchTerm()) as $value) {
                             if (stripos($item->text(), $value) !== false) {
                                 return true;
@@ -158,12 +164,14 @@ class Menu implements SearchableInterface
         $results = [];
         
         foreach($menuItems as $item) {
-            $results[] = new SearchResult(
-                searchable: $this->name(),
-                type: $this->title(),
-                title: $item->text(),
-                url: $item->url(),
-            );
+            if ($item instanceof Link) {
+                $results[] = new SearchResult(
+                    searchable: $this->name(),
+                    type: $this->title(),
+                    title: $this->createTitleTree($item),
+                    url: $item->url(),
+                );                
+            }
         }
         
         return $results;
@@ -198,5 +206,31 @@ class Menu implements SearchableInterface
             maxItemsPerPage: 100,
             urlGenerator: (new UrlGenerator())->addPageUrl(sprintf('?search[%s-page]={num}', $this->name())),
         );
+    }
+    
+    /**
+     * Create title tree.
+     *
+     * @param ItemInterface $item
+     * @return string
+     */
+    protected function createTitleTree(ItemInterface $item): string
+    {
+        // traverse over parent items:
+        $traverseParent = function(array $titles, ItemInterface $item) use (&$traverseParent): array {
+            $titles[] = $item->text();
+            
+            if ($item->getTreeParent()) {
+                if ($parentItem = $this->menuOrg->get($item->getTreeParent())) {
+                    return $traverseParent($titles, $parentItem);
+                }
+            }
+
+            return $titles;
+        };
+        
+        $titles = $traverseParent([], $item);
+        
+        return implode(' / ', array_reverse($titles));
     }
 }
