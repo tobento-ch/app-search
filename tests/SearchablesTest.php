@@ -138,7 +138,7 @@ class SearchablesTest extends TestCase
         $this->assertSame(['head', 'foot', 'main'], array_keys(array_map(fn ($s) => $s->name(), $searchablesNew->all())));
     }
     
-    public function estAllMethod()
+    public function testAllMethod()
     {
         $searchables = new Searchables();
         $this->assertSame([], $searchables->all());
