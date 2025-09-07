@@ -53,7 +53,7 @@
   flex-shrink: 1;
   overflow: auto;
 }
-.searchbar-icon {visibility: hidden;}
+.searchbar-icon {display: none;}
 .searchbar-result:not(:first-of-type) {
   border-top: 1px solid var(--color-gray-100, whitesmoke);
 }
@@ -77,6 +77,6 @@
 /* mobile */
 @media screen and (max-width: 768px), print {
   #btn-search-filters {display: inline-block;}
-  .searchbar-icon {visibility: visible;}
+  .searchbar-icon {display: inline-flex;}
   .searchbar {display: none;}
 }
