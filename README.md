@@ -43,7 +43,7 @@ composer require tobento/app-search
 
 ## Requirements
 
-- PHP 8.0 or greater
+- PHP 8.4 or greater
 
 # Documentation
 
@@ -67,7 +67,7 @@ use Tobento\App\Search\InputInterface;
 use Tobento\App\Search\SearchInterface;
 
 // Create the app
-$app = (new AppFactory())->createApp();
+$app = new AppFactory()->createApp();
 
 // Add directories:
 $app->dirs()
@@ -381,7 +381,7 @@ class ProductsSearchable implements SearchableInterface
             itemsPerPage: 25,
             maxPagesToShow: 6,
             maxItemsPerPage: 100,
-            urlGenerator: (new UrlGenerator())->addPageUrl('?search[product-page]={num}'),
+            urlGenerator: new UrlGenerator()->addPageUrl('?search[product-page]={num}'),
         );
     }
 }
