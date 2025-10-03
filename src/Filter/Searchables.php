@@ -182,7 +182,7 @@ class Searchables implements FilterInterface
     {
         $form = $view->form();
         $attributes = [];
-        $attributes['id'] ??= $form->nameToId($this->name());
+        $attributes['id'] = $form->nameToId($this->name());
         
         $body = $form->checkboxes(
             name: $form->nameToArray($this->name()),
