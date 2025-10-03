@@ -30,7 +30,6 @@ class Clear implements FilterInterface
      * @param string $name
      * @param string $label
      * @param array $attributes
-     * @param string $view
      */
     final public function __construct(
         protected string $name,
@@ -144,7 +143,7 @@ class Clear implements FilterInterface
         $attributes->add('data-search-filter', $this->name());
         $attributes->add('data-search-action', 'clear');
         
-        $html = '<a'.$attributes.'>';
+        $html = '<a'.(string)$attributes.'>';
         $html .= $view->esc($this->label);
         $html .= '</a>';
         return $html;
