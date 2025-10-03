@@ -34,9 +34,9 @@ class RepositoryTest extends TestCase
         return Factory::createStorageRepository(
             table: 'users',
             columns: [
-                Column\Id::new(),
-                Column\Text::new('email'),
-                Column\Text::new('firstname'),
+                new Column\Id(),
+                new Column\Text('email'),
+                new Column\Text('firstname'),
             ],
         );
     }
