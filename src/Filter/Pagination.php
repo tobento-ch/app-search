@@ -61,7 +61,7 @@ class Pagination implements FilterInterface
     /**
      * Updates the pagination total number of items.
      *
-     * @param PaginationInterface $pagination
+     * @param int $totalItems
      * @return static $this
      */
     public function updatePaginationTotalItems(int $totalItems): static
