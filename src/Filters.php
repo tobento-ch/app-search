@@ -119,7 +119,7 @@ class Filters implements FiltersInterface
     /**
      * Returns a new instance with (un)storable filters only.
      *
-     * @param bool $active
+     * @param bool $storable
      * @return static
      */
     public function storable(bool $storable = true): static
@@ -196,7 +196,7 @@ class Filters implements FiltersInterface
     /**
      * Get iterator.
      *
-     * @return Traversable
+     * @return Traversable<string, FilterInterface>
      */
     public function getIterator(): Traversable
     {

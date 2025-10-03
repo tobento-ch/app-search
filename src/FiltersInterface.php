@@ -17,7 +17,7 @@ use Countable;
 use IteratorAggregate;
 
 /**
- * FiltersInterface
+ * @extends IteratorAggregate<string, FilterInterface>
  */
 interface FiltersInterface extends IteratorAggregate, Countable
 {
@@ -72,7 +72,7 @@ interface FiltersInterface extends IteratorAggregate, Countable
     /**
      * Returns a new instance with (un)storable filters only.
      *
-     * @param bool $active
+     * @param bool $storable
      * @return static
      */
     public function storable(bool $storable = true): static;

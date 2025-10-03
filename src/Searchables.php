@@ -149,7 +149,7 @@ final class Searchables implements SearchablesInterface
     /**
      * Returns the iterator. 
      *
-     * @return Traversable
+     * @return Traversable<string, SearchableInterface>
      */
     public function getIterator(): Traversable
     {

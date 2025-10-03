@@ -84,7 +84,7 @@ final class SearchResults implements SearchResultsInterface
     /**
      * Returns the iterator. 
      *
-     * @return Traversable
+     * @return Traversable<array-key, SearchResultInterface>
      */
     public function getIterator(): Traversable
     {

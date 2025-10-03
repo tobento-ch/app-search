@@ -17,7 +17,7 @@ use Countable;
 use IteratorAggregate;
 
 /**
- * SearchResultsInterface
+ * @extends IteratorAggregate<array-key, SearchResultInterface>
  */
 interface SearchResultsInterface extends IteratorAggregate, Countable
 {
