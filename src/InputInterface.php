@@ -50,7 +50,7 @@ interface InputInterface
     /**
      * Delete an item by name.
      *
-     * @param string|int $key The key.
+     * @param string|int $name
      * @return static $this
      */
     public function delete(string|int $name): static;
